@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +89,16 @@ public class TagFacadeREST extends AbstractFacade<Tag> {
         return em;
     }
     
+    //añadido
+    
+    @GET
+    @Path("tag/{nombre}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tag> encontrarTagPorNombre(@PathParam("nombre") String nombre) {
+        Query q; 
+        
+        q = em.createQuery("select t from Tag t where t.nombre like :nombre");
+        q.setParameter("nombre",  nombre);
+        return q.getResultList();
+    }
 }

@@ -5,11 +5,14 @@
  */
 package facade;
 
+import entity.Evento;
+import entity.Tag;
 import entity.Tagevento;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +91,49 @@ public class TageventoFacadeREST extends AbstractFacade<Tagevento> {
         return em;
     }
     
+    //añadido
+    
+    /* ya implementado??
+    public List<Tagevento> encontrarTagEvPorID(int id){
+        Query q;
+        
+        q = em.createQuery("select t from Tagevento t where t.tagId.id = :id");
+        q.setParameter("id",  id);
+        return q.getResultList();
+    }
+    */
+    
+    @GET
+    @Path("tagEvento/{tag}/{ev}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tagevento> encontrarTagEvPorTagyEvento(@PathParam("tag") Tag tag, @PathParam("ev") Evento ev){
+        Query q;
+        
+        q = em.createQuery("select t from Tagevento t where t.tagId = :tag AND t.eventoId = :ev");
+        q.setParameter("tag",  tag);
+        q.setParameter("ev",  ev);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("tagEventoEv/{ev}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tagevento> encontrarTagEv(@PathParam("ev") Evento ev){
+        Query q;
+        
+        q = em.createQuery("select t from Tagevento t where t.eventoId = :ev");
+        q.setParameter("ev",  ev);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("tagEventoTag/{tag}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tagevento> encontrarTagEvPorTag(@PathParam("tag") Tag tag) {
+        Query q;
+        
+        q = em.createQuery("select t from Tagevento t where t.tagId = :tag");
+        q.setParameter("tag",  tag);
+        return q.getResultList();
+    }
 }

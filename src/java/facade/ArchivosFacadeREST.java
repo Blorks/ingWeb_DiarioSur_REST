@@ -6,10 +6,13 @@
 package facade;
 
 import entity.Archivos;
+import entity.Evento;
+import entity.Fileev;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +91,52 @@ public class ArchivosFacadeREST extends AbstractFacade<Archivos> {
         return em;
     }
     
+    //añadido
+    
+    /* ya implementado???
+    @GET
+    @Path("archivoID/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Archivos> encontrarArchivoPorID(@PathParam("id") int id) {
+        Query q;
+        
+        q = em.createQuery("select a from Archivos a where a.id = :id");
+        q.setParameter("id",  id);
+        return q.getResultList();
+    }
+    */
+    
+    @GET
+    @Path("archivo/{evento}/{archivo}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Archivos> encontrarArchivoPorEventoYArchivo(@PathParam("evento") Evento evento, @PathParam("archivo") Fileev archivo) {
+        Query q;
+        
+        q = em.createQuery("select a from Archivos a where a.eventoId = :evento AND a.fileevId = :archivo");
+        q.setParameter("evento",  evento);
+        q.setParameter("archivo",  archivo);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("archivoEvento/{evento}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Archivos> encontrarArchivoPorEvento(@PathParam("evento") Evento evento) {
+        Query q;
+        
+        q = em.createQuery("select a from Archivos a where a.eventoId = :evento");
+        q.setParameter("evento",  evento);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("archivoFile/{archivo}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Archivos> encontrarArchivoPorFile(@PathParam("archivo") Fileev archivo) {
+        Query q;
+        
+        q = em.createQuery("select a from Archivos a where a.fileevId = :archivo");
+        q.setParameter("archivo",  archivo);
+        return q.getResultList();
+    }
 }

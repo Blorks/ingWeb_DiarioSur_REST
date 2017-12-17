@@ -5,11 +5,14 @@
  */
 package facade;
 
+import entity.Tag;
 import entity.Tagusuario;
+import entity.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +91,38 @@ public class TagusuarioFacadeREST extends AbstractFacade<Tagusuario> {
         return em;
     }
     
+    //añadido
+    
+    /* ya implementado??
+    public List<Tagusuario> encontrarTagUserPorID(int id){
+        Query q;
+        
+        q = em.createQuery("select t from Tagusuario t where t.tagId.id = :id");
+        q.setParameter("id",  id);
+        return q.getResultList();
+    }
+    */
+    
+    @GET
+    @Path("tagUsuario/{user}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tagusuario> encontrarTagUser(@PathParam("user") Usuario user){
+        Query q;
+        
+        q = em.createQuery("select t from Tagusuario t where t.usuarioId = :user");
+        q.setParameter("user",  user);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("tagUsuario/{tag}/{user}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tagusuario> encontrarTagUserPorTagyUsuario(@PathParam("tag") Tag tag, @PathParam("user") Usuario user){
+        Query q;
+        
+        q = em.createQuery("select t from Tagusuario t where t.tagId = :tag AND t.usuarioId = :user");
+        q.setParameter("tag",  tag);
+        q.setParameter("user",  user);
+        return q.getResultList();
+    }
 }

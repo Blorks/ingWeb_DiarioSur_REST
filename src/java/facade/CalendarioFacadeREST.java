@@ -6,10 +6,12 @@
 package facade;
 
 import entity.Calendario;
+import entity.Evento;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +90,16 @@ public class CalendarioFacadeREST extends AbstractFacade<Calendario> {
         return em;
     }
     
+    //añadido
+    
+    @GET
+    @Path("calendario/{evento}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Calendario> encontrarCalendarioPorEvento(@PathParam("evento") Evento evento) {
+        Query q; 
+
+        q = em.createQuery("select c from Calendario c where c.eventoId = :evento");
+        q.setParameter("evento",  evento);
+        return q.getResultList();
+    }
 }

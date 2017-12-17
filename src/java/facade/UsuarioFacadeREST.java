@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +89,35 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return em;
     }
     
+    //añadido
+    
+    /* ya implementado??
+    public List<Usuario> encontrarUsuarioPorID(int id) {
+        Query q; 
+        
+        q = em.createQuery("select u from Usuario u where u.id = :id");
+        q.setParameter("id",  id);
+        return q.getResultList();
+    }
+    */
+    
+    @GET
+    @Path("usuario/{email}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Usuario> encontrarUsuarioPorEmail(@PathParam("email") String email) {
+        Query q; 
+        
+        q = em.createQuery("select u from Usuario u where u.email like :email");
+        q.setParameter("email",  email);
+        return q.getResultList();
+    }
+    
+    /* ya implementado??
+    public void eliminarUsuarioPorID(int id) {
+        Query q; 
+        
+        q = em.createQuery("DELETE FROM Usuario u where u.id = :id");
+        q.setParameter("id",  id);
+    }
+    */
 }

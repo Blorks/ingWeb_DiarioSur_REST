@@ -6,10 +6,12 @@
 package facade;
 
 import entity.Evento;
+import entity.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +90,86 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
         return em;
     }
     
+    //añadido
+    
+    /* ya implemantado???
+    @GET
+    @Path("evento/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoByID(int id) {
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e where e.id = :id");
+        q.setParameter("id",  id);
+        return q.getResultList();
+    }
+    */
+    
+    @GET
+    @Path("revisado")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventosRevisados() {
+        Query q; 
+        
+        int id=1;
+        
+        q = em.createQuery("select e from Evento e where e.estarevisado = :id");
+        q.setParameter("id",  id);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("evento/{user}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoByUsuario(@PathParam("user") Usuario user) {
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e where e.usuarioId = :user");
+        q.setParameter("user",  user);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("eventoPrecio/{precioMax}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventoByPrecioMax(@PathParam("precioMax") double precioMax) {
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e where e.precio <= :precioMax");
+        q.setParameter("precioMax", precioMax);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("noRevisado")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventosNoRevisados() {
+        Query q;
+        int estaRevisadoTemp = 0;
+        
+        q = em.createQuery("select e from Evento e where e.estarevisado = :estaRevisadoTemp");
+        q.setParameter("estaRevisadoTemp", estaRevisadoTemp);
+        return q.getResultList();
+    }
+    
+    /* ya implementado??
+    public void eliminarEventoPorID(int id) {
+        Query q; 
+        
+        q = em.createQuery("DELETE FROM Evento e where e.id = :id");
+        q.setParameter("id",  id);
+    }
+    */
+    
+    // no entiendo este metodo???? he puesto eso mal para recordar q aqui hay algo mal
+    atath
+    @GET
+    @Path("ultimo")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ultimoIDInsertado(){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.id DESC");
+        return q.getResultList();
+    }
 }

@@ -6,10 +6,12 @@
 package facade;
 
 import entity.Notificacion;
+import entity.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +90,41 @@ public class NotificacionFacadeREST extends AbstractFacade<Notificacion> {
         return em;
     }
     
+    //añadido
+    
+    @GET
+    @Path("notificacionLeida/{user}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Notificacion> encontrarNotificacionesDeUsuario(@PathParam("user") Usuario user) {
+        Query q; 
+        
+        int leida = 0;
+        
+        q = em.createQuery("select n from Notificacion n where n.usuarioId = :user AND n.leida = :leida");
+        q.setParameter("user",  user);
+        q.setParameter("leida",  leida);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("notificacionTodas/{user}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Notificacion> encontrarTodasLasNotificacionesDeUsuario(@PathParam("user") Usuario user) {
+        Query q; 
+        
+        q = em.createQuery("select n from Notificacion n where n.usuarioId = :user");
+        q.setParameter("user",  user);
+        return q.getResultList();
+    }
+    
+    
+    /* ya implementado??
+    public List<Notificacion> encontrarNotificacionByID(int id) {
+        Query q; 
+        
+        q = em.createQuery("select n from Notificacion n where n.id = :id");
+        q.setParameter("id",  id);
+        return q.getResultList();
+    }
+    */
 }
