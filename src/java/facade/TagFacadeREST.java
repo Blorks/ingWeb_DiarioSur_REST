@@ -89,8 +89,6 @@ public class TagFacadeREST extends AbstractFacade<Tag> {
         return em;
     }
     
-    //añadido
-    
     @GET
     @Path("tag/{nombre}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

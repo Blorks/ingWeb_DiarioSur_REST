@@ -89,10 +89,8 @@ public class FileevFacadeREST extends AbstractFacade<Fileev> {
         return em;
     }
     
-    //añadido
-    
     @GET
-    @Path("archivo/{url}")
+    @Path("archivoURL/{url}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Fileev> encontrarArchivoPorURL(@PathParam("url") String url) {
         Query q; 
@@ -102,17 +100,14 @@ public class FileevFacadeREST extends AbstractFacade<Fileev> {
         return q.getResultList();
     }
     
-    
-    /* ya implementado??
     @GET
-    @Path("{from}/{to}")
+    @Path("archivo/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Fileev> encontrarArchivoPorID(int id) {
+    public List<Fileev> encontrarArchivoPorID(@PathParam("id") int id) {
         Query q; 
         
         q = em.createQuery("select a from Fileev a where a.id = :id");
         q.setParameter("id", id);
         return q.getResultList();
     }
-    */
 }

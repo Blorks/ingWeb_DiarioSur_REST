@@ -89,20 +89,19 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return em;
     }
     
-    //añadido
-    
-    /* ya implementado??
-    public List<Usuario> encontrarUsuarioPorID(int id) {
+    @GET
+    @Path("usuario/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Usuario> encontrarUsuarioPorID(@PathParam("id") int id) {
         Query q; 
         
         q = em.createQuery("select u from Usuario u where u.id = :id");
         q.setParameter("id",  id);
         return q.getResultList();
     }
-    */
     
     @GET
-    @Path("usuario/{email}")
+    @Path("usuarioEmail/{email}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Usuario> encontrarUsuarioPorEmail(@PathParam("email") String email) {
         Query q; 
@@ -112,12 +111,12 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return q.getResultList();
     }
     
-    /* ya implementado??
-    public void eliminarUsuarioPorID(int id) {
+    @DELETE
+    @Path("usuario/{id}")
+    public void eliminarUsuarioPorID(@PathParam("id") int id) {
         Query q; 
         
         q = em.createQuery("DELETE FROM Usuario u where u.id = :id");
         q.setParameter("id",  id);
     }
-    */
 }

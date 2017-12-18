@@ -90,8 +90,6 @@ public class DateevFacadeREST extends AbstractFacade<Dateev> {
         return em;
     }
     
-    //Añadido
-    
     @GET
     @Path("date/{dia}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

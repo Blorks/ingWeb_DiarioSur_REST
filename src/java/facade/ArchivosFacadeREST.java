@@ -91,9 +91,6 @@ public class ArchivosFacadeREST extends AbstractFacade<Archivos> {
         return em;
     }
     
-    //añadido
-    
-    /* ya implementado???
     @GET
     @Path("archivoID/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -104,7 +101,6 @@ public class ArchivosFacadeREST extends AbstractFacade<Archivos> {
         q.setParameter("id",  id);
         return q.getResultList();
     }
-    */
     
     @GET
     @Path("archivo/{evento}/{archivo}")

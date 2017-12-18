@@ -90,18 +90,17 @@ public class TagusuarioFacadeREST extends AbstractFacade<Tagusuario> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    //añadido
-    
-    /* ya implementado??
-    public List<Tagusuario> encontrarTagUserPorID(int id){
+
+    @GET
+    @Path("tagUsuarioID/{id")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Tagusuario> encontrarTagUserPorID(@PathParam("id") int id){
         Query q;
         
         q = em.createQuery("select t from Tagusuario t where t.tagId.id = :id");
         q.setParameter("id",  id);
         return q.getResultList();
     }
-    */
     
     @GET
     @Path("tagUsuario/{user}")

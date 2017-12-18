@@ -90,20 +90,17 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
         return em;
     }
     
-    //añadido
-    
-    /* ya implemantado???
     @GET
     @Path("evento/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventoByID(int id) {
+    public List<Evento> encontrarEventoByID(@PathParam("id") int id) {
         Query q; 
         
         q = em.createQuery("select e from Evento e where e.id = :id");
         q.setParameter("id",  id);
         return q.getResultList();
     }
-    */
+    
     
     @GET
     @Path("revisado")
@@ -152,17 +149,16 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
         return q.getResultList();
     }
     
-    /* ya implementado??
-    public void eliminarEventoPorID(int id) {
+    @DELETE
+    @Path("borrar/{id}")
+    public void eliminarEventoPorID(@PathParam("id") int id) {
         Query q; 
         
         q = em.createQuery("DELETE FROM Evento e where e.id = :id");
         q.setParameter("id",  id);
     }
-    */
     
-    // no entiendo este metodo???? he puesto eso mal para recordar q aqui hay algo mal
-    atath
+    
     @GET
     @Path("ultimo")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

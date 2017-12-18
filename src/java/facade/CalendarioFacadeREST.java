@@ -90,8 +90,6 @@ public class CalendarioFacadeREST extends AbstractFacade<Calendario> {
         return em;
     }
     
-    //añadido
-    
     @GET
     @Path("calendario/{evento}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

@@ -90,8 +90,6 @@ public class NotificacionFacadeREST extends AbstractFacade<Notificacion> {
         return em;
     }
     
-    //añadido
-    
     @GET
     @Path("notificacionLeida/{user}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -117,14 +115,14 @@ public class NotificacionFacadeREST extends AbstractFacade<Notificacion> {
         return q.getResultList();
     }
     
-    
-    /* ya implementado??
-    public List<Notificacion> encontrarNotificacionByID(int id) {
+    @GET
+    @Path("notificacion/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Notificacion> encontrarNotificacionByID(@PathParam("id") int id) {
         Query q; 
         
         q = em.createQuery("select n from Notificacion n where n.id = :id");
         q.setParameter("id",  id);
         return q.getResultList();
     }
-    */
 }
