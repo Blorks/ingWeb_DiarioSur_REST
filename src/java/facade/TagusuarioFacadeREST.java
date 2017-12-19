@@ -92,7 +92,7 @@ public class TagusuarioFacadeREST extends AbstractFacade<Tagusuario> {
     }
 
     @GET
-    @Path("tagUsuarioID/{id")
+    @Path("tagUsuarioID/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Tagusuario> encontrarTagUserPorID(@PathParam("id") int id){
         Query q;
