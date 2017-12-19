@@ -118,11 +118,11 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
     @GET
     @Path("eventoUsuario/{user}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventoByUsuario(@PathParam("user") Usuario user) {
+    public List<Evento> encontrarEventoByUsuario(@PathParam("user") int idUsuario) {
         Query q; 
         
-        q = em.createQuery("select e from Evento e where e.usuarioId = :user");
-        q.setParameter("user",  user);
+        q = em.createQuery("select e from Evento e where e.usuarioId.id = :user");
+        q.setParameter("user",  idUsuario);
         return q.getResultList();
     }
     
