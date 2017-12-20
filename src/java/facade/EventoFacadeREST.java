@@ -138,6 +138,59 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
     }
     
     @GET
+    @Path("eventoPrecioASC")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ordenarEventosByPrecioASC() {
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e ORDER BY e.precio");
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("eventoPrecioDESC")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ordenarEventosByPrecioDESC() {
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e ORDER BY e.precio DESC");
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("eventoFechaUnica/{dia}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventosPorDia(@PathParam("dia") String dia) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e WHERE e.dateevId.dia like :dia");
+        q.setParameter("dia", dia);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("eventoFechaDesde/{desde}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventosPorFechaDesde(@PathParam("desde") String desde) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e WHERE e.dateevId.desde like :desde");
+        q.setParameter("desde", desde);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("eventoListaFechas/{lista}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> encontrarEventosPorListaFechas(@PathParam("lista") String lista) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
+        Query q; 
+        
+        q = em.createQuery("select e from Evento e WHERE e.dateevId.listadias like :lista");
+        q.setParameter("lista", lista);
+        return q.getResultList();
+    }
+    
+    @GET
     @Path("noRevisado")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Evento> encontrarEventosNoRevisados() {
