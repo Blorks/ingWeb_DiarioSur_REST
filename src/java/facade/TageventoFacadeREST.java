@@ -126,13 +126,13 @@ public class TageventoFacadeREST extends AbstractFacade<Tagevento> {
     }
     
     @GET
-    @Path("tagEventoTag/{tag}")
+    @Path("tagEventoTag/{tagID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tagevento> encontrarTagEvPorTag(@PathParam("tag") Tag tag) {
+    public List<Tagevento> encontrarTagEvPorTag(@PathParam("tag") int tagID) {
         Query q;
         
-        q = em.createQuery("select t from Tagevento t where t.tagId = :tag");
-        q.setParameter("tag",  tag);
+        q = em.createQuery("select t from Tagevento t where t.tagId.id = :tagID");
+        q.setParameter("tagID",  tagID);
         return q.getResultList();
     }
 }
