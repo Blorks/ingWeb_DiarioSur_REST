@@ -6,6 +6,7 @@
 package facade;
 
 import entity.Dateev;
+import entity.Evento;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -132,6 +133,16 @@ public class DateevFacadeREST extends AbstractFacade<Dateev> {
         
         q = em.createQuery("select f from Dateev f where f.id = :idFecha");
         q.setParameter("idFecha", idFecha);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("ultimo")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> ultimoIDInsertado(){
+        Query q;
+        
+        q = em.createQuery("SELECT d FROM Dateev d ORDER BY d.id DESC");
         return q.getResultList();
     }
     
