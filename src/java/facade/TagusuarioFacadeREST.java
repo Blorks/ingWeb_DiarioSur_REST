@@ -105,23 +105,23 @@ public class TagusuarioFacadeREST extends AbstractFacade<Tagusuario> {
     @GET
     @Path("tagUsuario/{user}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tagusuario> encontrarTagUser(@PathParam("user") Usuario user){
+    public List<Tagusuario> encontrarTagUser(@PathParam("idUsuario") int idUsuario){
         Query q;
         
-        q = em.createQuery("select t from Tagusuario t where t.usuarioId = :user");
-        q.setParameter("user",  user);
+        q = em.createQuery("select t from Tagusuario t where t.usuarioId.id = :idUsuario");
+        q.setParameter("idUsuario",  idUsuario);
         return q.getResultList();
     }
     
     @GET
     @Path("tagUsuario/{tag}/{user}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tagusuario> encontrarTagUserPorTagyUsuario(@PathParam("tag") Tag tag, @PathParam("user") Usuario user){
+    public List<Tagusuario> encontrarTagUserPorTagyUsuario(@PathParam("tag") int idTag, @PathParam("user") int idUsuario){
         Query q;
         
-        q = em.createQuery("select t from Tagusuario t where t.tagId = :tag AND t.usuarioId = :user");
-        q.setParameter("tag",  tag);
-        q.setParameter("user",  user);
+        q = em.createQuery("select t from Tagusuario t where t.tagId.id = :tag AND t.usuarioId.id = :user");
+        q.setParameter("tag",  idTag);
+        q.setParameter("user",  idUsuario);
         return q.getResultList();
     }
 }
