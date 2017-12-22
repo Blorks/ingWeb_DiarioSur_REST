@@ -7,7 +7,12 @@ package facade;
 
 import entity.Evento;
 import entity.Usuario;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -163,8 +168,16 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
     public List<Evento> encontrarEventosPorDia(@PathParam("dia") String dia) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
         Query q; 
         
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date diaDate = new Date();
+        try {
+            diaDate = sdf.parse(dia);
+        } catch (ParseException ex) {
+            Logger.getLogger(EventoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         q = em.createQuery("select e from Evento e WHERE e.dateevId.dia like :dia");
-        q.setParameter("dia", dia);
+        q.setParameter("dia", diaDate);
         return q.getResultList();
     }
     
