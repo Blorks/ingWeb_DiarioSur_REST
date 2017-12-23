@@ -143,35 +143,27 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
     }
     
     @GET
-    @Path("eventoPrecioASC")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> ordenarEventosByPrecioASC() {
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e ORDER BY e.precio");
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("eventoPrecioDESC")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> ordenarEventosByPrecioDESC() {
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e ORDER BY e.precio DESC");
-        return q.getResultList();
-    }
-    
-    @GET
     @Path("eventoFechaUnica/{dia}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Evento> encontrarEventosPorDia(@PathParam("dia") String dia) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
         Query q; 
         
+        String[] diaTmp = dia.trim().split("-");
+        
+        String diaBien = "";
+        
+        for(int i = 0; i < diaTmp.length; i++)
+        {
+            if(i == diaTmp.length - 1)
+                diaBien+= diaTmp[i];
+            else
+                diaBien+= diaTmp[i] + "/";
+        }
+        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date diaDate = new Date();
         try {
-            diaDate = sdf.parse(dia);
+            diaDate = sdf.parse(diaBien);
         } catch (ParseException ex) {
             Logger.getLogger(EventoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -234,4 +226,34 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
         q = em.createQuery("SELECT e FROM Evento e ORDER BY e.id DESC");
         return q.getResultList();
     }
+    
+    @GET
+    @Path("ordenAlfabetico")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ordenarEventosAlfabeticamente(){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.titulo");
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("ordenPrecio")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ordenarEventosPrecio(){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.precio");
+        return q.getResultList();
+    }
+    /*
+    @GET
+    @Path("ordenFecha")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ordenarEventosFecha(){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.");
+        return q.getResultList();
+    }*/
 }
