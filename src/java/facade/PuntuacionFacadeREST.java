@@ -90,7 +90,7 @@ public class PuntuacionFacadeREST extends AbstractFacade<Puntuacion> {
     }
     
     @GET
-    @Path("puntuacionUsuario/{user}")
+    @Path("puntuacionUsuario/{idUser}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Puntuacion> encontrarPuntuacionDeUsuario(@PathParam("idUser") int idUser) {
         Query q; 
@@ -101,7 +101,7 @@ public class PuntuacionFacadeREST extends AbstractFacade<Puntuacion> {
     }
     
     @GET
-    @Path("puntuacionEvento/{evento}")
+    @Path("puntuacionEvento/{idEvento}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Puntuacion> encontrarPuntuacionesDeEvento(@PathParam("idEvento") int idEvento) {
         Query q; 
@@ -111,4 +111,15 @@ public class PuntuacionFacadeREST extends AbstractFacade<Puntuacion> {
         return q.getResultList();
     }
     
+    @GET
+    @Path("puntuacionEventoUsuario/{idEvento}/{idUsuario}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Puntuacion> encontrarPuntuacionesDeEventoYUsuario(@PathParam("idEvento") int idEvento, @PathParam("idUsuario") int idUsuario) {
+        Query q; 
+        
+        q = em.createQuery("select p from Puntuacion p where p.eventoId.id = :idEvento AND p.usuarioId.id = :idUsuario");
+        q.setParameter("idEvento",  idEvento);
+        q.setParameter("idUsuario",  idUsuario);
+        return q.getResultList();
+    }
 }
