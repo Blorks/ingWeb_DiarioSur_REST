@@ -6,38 +6,31 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Dani
  */
 @Entity
-@Table(name = "FILEEV")
+@Table(name = "PUNTUACION")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Fileev.findAll", query = "SELECT f FROM Fileev f")
-    , @NamedQuery(name = "Fileev.findById", query = "SELECT f FROM Fileev f WHERE f.id = :id")
-    , @NamedQuery(name = "Fileev.findByUrl", query = "SELECT f FROM Fileev f WHERE f.url = :url")
-    , @NamedQuery(name = "Fileev.findByUsuarioId", query = "SELECT f FROM Fileev f WHERE f.usuarioId = :usuarioId")})
-public class Fileev implements Serializable {
-
-    @OneToMany(mappedBy = "fileevId")
-    private Collection<Usuario> usuarioCollection;
+    @NamedQuery(name = "Puntuacion.findAll", query = "SELECT p FROM Puntuacion p")
+    , @NamedQuery(name = "Puntuacion.findById", query = "SELECT p FROM Puntuacion p WHERE p.id = :id")
+    , @NamedQuery(name = "Puntuacion.findByPuntuacion", query = "SELECT p FROM Puntuacion p WHERE p.puntuacion = :puntuacion")})
+public class Puntuacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,24 +38,21 @@ public class Fileev implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 4000)
-    @Column(name = "URL")
-    private String url;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "USUARIO_ID")
-    private int usuarioId;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "PUNTUACION")
+    private Double puntuacion;
+    @JoinColumn(name = "EVENTO_ID", referencedColumnName = "ID")
+    @ManyToOne
+    private Evento eventoId;
+    @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")
+    @ManyToOne
+    private Usuario usuarioId;
 
-    public Fileev() {
+    public Puntuacion() {
     }
 
-    public Fileev(Integer id) {
+    public Puntuacion(Integer id) {
         this.id = id;
-    }
-
-    public Fileev(Integer id, int usuarioId) {
-        this.id = id;
-        this.usuarioId = usuarioId;
     }
 
     public Integer getId() {
@@ -73,19 +63,27 @@ public class Fileev implements Serializable {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public Double getPuntuacion() {
+        return puntuacion;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPuntuacion(Double puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
-    public int getUsuarioId() {
+    public Evento getEventoId() {
+        return eventoId;
+    }
+
+    public void setEventoId(Evento eventoId) {
+        this.eventoId = eventoId;
+    }
+
+    public Usuario getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(int usuarioId) {
+    public void setUsuarioId(Usuario usuarioId) {
         this.usuarioId = usuarioId;
     }
 
@@ -99,10 +97,10 @@ public class Fileev implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Fileev)) {
+        if (!(object instanceof Puntuacion)) {
             return false;
         }
-        Fileev other = (Fileev) object;
+        Puntuacion other = (Puntuacion) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,16 +109,7 @@ public class Fileev implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Fileev[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
-    }
-
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+        return "entity.Puntuacion[ id=" + id + " ]";
     }
     
 }

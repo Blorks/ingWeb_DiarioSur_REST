@@ -5,7 +5,7 @@
  */
 package facade;
 
-import entity.Dateev;
+import entity.Puntuacion;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -25,27 +25,27 @@ import javax.ws.rs.core.MediaType;
  * @author Dani
  */
 @Stateless
-@Path("entity.dateev")
-public class DateevFacadeREST extends AbstractFacade<Dateev> {
+@Path("entity.puntuacion")
+public class PuntuacionFacadeREST extends AbstractFacade<Puntuacion> {
 
     @PersistenceContext(unitName = "diario_Sur_RESTPU")
     private EntityManager em;
 
-    public DateevFacadeREST() {
-        super(Dateev.class);
+    public PuntuacionFacadeREST() {
+        super(Puntuacion.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Dateev entity) {
+    public void create(Puntuacion entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Dateev entity) {
+    public void edit(@PathParam("id") Integer id, Puntuacion entity) {
         super.edit(entity);
     }
 
@@ -58,21 +58,21 @@ public class DateevFacadeREST extends AbstractFacade<Dateev> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Dateev find(@PathParam("id") Integer id) {
+    public Puntuacion find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Dateev> findAll() {
+    public List<Puntuacion> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Dateev> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Puntuacion> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

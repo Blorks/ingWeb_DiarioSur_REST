@@ -6,17 +6,10 @@
 package facade;
 
 import entity.Evento;
-import entity.Usuario;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -95,114 +88,4 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
         return em;
     }
     
-    @GET
-    @Path("evento/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventoByID(@PathParam("id") int id) {
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e where e.id = :id");
-        q.setParameter("id",  id);
-        return q.getResultList();
-    }
-    
-    
-    @GET
-    @Path("revisado")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventosRevisados() {
-        Query q; 
-        
-        int id=1;
-        
-        q = em.createQuery("select e from Evento e where e.estarevisado = :id");
-        q.setParameter("id",  id);
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("eventoUsuario/{user}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventoByUsuario(@PathParam("user") int idUsuario) {
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e where e.usuarioId.id = :user");
-        q.setParameter("user",  idUsuario);
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("eventoPrecio/{precioMax}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventoByPrecioMax(@PathParam("precioMax") double precioMax) {
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e where e.precio <= :precioMax");
-        q.setParameter("precioMax", precioMax);
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("noRevisado")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventosNoRevisados() {
-        Query q;
-        int estaRevisadoTemp = 0;
-        
-        q = em.createQuery("select e from Evento e where e.estarevisado = :estaRevisadoTemp");
-        q.setParameter("estaRevisadoTemp", estaRevisadoTemp);
-        return q.getResultList();
-    }
-    
-    @DELETE
-    @Path("borrar/{id}")
-    public void eliminarEventoPorID(@PathParam("id") int id) {
-        Query q; 
-        
-        q = em.createQuery("DELETE FROM Evento e where e.id = :id");
-        q.setParameter("id",  id);
-    }
-    
-    
-    @GET
-    @Path("ultimo")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> ultimoIDInsertado(){
-        Query q;
-        
-        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.id DESC");
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("ordenAlfabetico")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> ordenarEventosAlfabeticamente(){
-        Query q;
-        
-        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.titulo");
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("ordenPrecio")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> ordenarEventosPrecio(){
-        Query q;
-        
-        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.precio");
-        return q.getResultList();
-    }
-    
-    
-    @GET
-    @Path("eventoFechaDesde/{idFecha}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventosPorFecha(@PathParam("idFecha") int idFecha) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e WHERE e.dateevId.id = :idFecha");
-        q.setParameter("idFecha", idFecha);
-        return q.getResultList();
-    }
 }

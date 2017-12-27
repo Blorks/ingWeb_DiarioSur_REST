@@ -34,6 +34,7 @@ public class ApplicationConfig extends Application {
         resources.add(facade.EventoFacadeREST.class);
         resources.add(facade.FileevFacadeREST.class);
         resources.add(facade.NotificacionFacadeREST.class);
+        resources.add(facade.PuntuacionFacadeREST.class);
         resources.add(facade.TagFacadeREST.class);
         resources.add(facade.TageventoFacadeREST.class);
         resources.add(facade.TagusuarioFacadeREST.class);
