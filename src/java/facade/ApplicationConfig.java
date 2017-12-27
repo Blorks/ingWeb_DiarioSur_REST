@@ -29,6 +29,15 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(facade.CalendarioFacadeREST.class);
+        resources.add(facade.DateevFacadeREST.class);
+        resources.add(facade.EventoFacadeREST.class);
+        resources.add(facade.FileevFacadeREST.class);
+        resources.add(facade.NotificacionFacadeREST.class);
+        resources.add(facade.TagFacadeREST.class);
+        resources.add(facade.TageventoFacadeREST.class);
+        resources.add(facade.TagusuarioFacadeREST.class);
+        resources.add(facade.UsuarioFacadeREST.class);
     }
     
 }
