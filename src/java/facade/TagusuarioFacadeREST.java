@@ -5,9 +5,7 @@
  */
 package facade;
 
-import entity.Tag;
 import entity.Tagusuario;
-import entity.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
