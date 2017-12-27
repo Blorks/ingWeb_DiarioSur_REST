@@ -143,59 +143,6 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
     }
     
     @GET
-    @Path("eventoFechaUnica/{dia}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventosPorDia(@PathParam("dia") String dia) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
-        Query q; 
-        
-        String[] diaTmp = dia.trim().split("-");
-        
-        String diaBien = "";
-        
-        for(int i = 0; i < diaTmp.length; i++)
-        {
-            if(i == diaTmp.length - 1)
-                diaBien+= diaTmp[i];
-            else
-                diaBien+= diaTmp[i] + "/";
-        }
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date diaDate = new Date();
-        try {
-            diaDate = sdf.parse(diaBien);
-        } catch (ParseException ex) {
-            Logger.getLogger(EventoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        q = em.createQuery("select e from Evento e WHERE e.dateevId.dia like :dia");
-        q.setParameter("dia", diaDate);
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("eventoFechaDesde/{desde}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventosPorFechaDesde(@PathParam("desde") String desde) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e WHERE e.dateevId.desde like :desde");
-        q.setParameter("desde", desde);
-        return q.getResultList();
-    }
-    
-    @GET
-    @Path("eventoListaFechas/{lista}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventosPorListaFechas(@PathParam("lista") String lista) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
-        Query q; 
-        
-        q = em.createQuery("select e from Evento e WHERE e.dateevId.listadias like :lista");
-        q.setParameter("lista", lista);
-        return q.getResultList();
-    }
-    
-    @GET
     @Path("noRevisado")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Evento> encontrarEventosNoRevisados() {
@@ -246,14 +193,16 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
         q = em.createQuery("SELECT e FROM Evento e ORDER BY e.precio");
         return q.getResultList();
     }
-    /*
+    
+    
     @GET
-    @Path("ordenFecha")
+    @Path("eventoFechaDesde/{idFecha}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> ordenarEventosFecha(){
-        Query q;
+    public List<Evento> encontrarEventosPorFecha(@PathParam("idFecha") int idFecha) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
+        Query q; 
         
-        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.");
+        q = em.createQuery("select e from Evento e WHERE e.dateevId.id = :idFecha");
+        q.setParameter("idFecha", idFecha);
         return q.getResultList();
-    }*/
+    }
 }

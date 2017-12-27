@@ -146,4 +146,32 @@ public class DateevFacadeREST extends AbstractFacade<Dateev> {
         return q.getResultList();
     }
     
+    @GET
+    @Path("unico")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorUnica() {
+        Query q; 
+        
+        int condicion = 1;
+        
+        q = em.createQuery("select f from Dateev f where f.esunico = :condicion");
+        q.setParameter("condicion", condicion);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("rango")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorRango() {
+        Query q; 
+        
+        int condicion = 1;
+        
+        q = em.createQuery("select f from Dateev f where f.todoslosdias = :condicion");
+        q.setParameter("condicion", condicion);
+        return q.getResultList();
+    }
+    
+    
+    
 }
