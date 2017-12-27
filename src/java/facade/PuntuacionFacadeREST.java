@@ -90,7 +90,7 @@ public class PuntuacionFacadeREST extends AbstractFacade<Puntuacion> {
     }
     
     @GET
-    @Path("puntuacion/{user}")
+    @Path("puntuacionUsuario/{user}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Puntuacion> encontrarPuntuacionDeUsuario(@PathParam("idUser") int idUser) {
         Query q; 
@@ -101,7 +101,7 @@ public class PuntuacionFacadeREST extends AbstractFacade<Puntuacion> {
     }
     
     @GET
-    @Path("puntuacion/{evento}")
+    @Path("puntuacionEvento/{evento}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Puntuacion> encontrarPuntuacionesDeEvento(@PathParam("idEvento") int idEvento) {
         Query q; 
