@@ -98,7 +98,7 @@ public class NotificacionFacadeREST extends AbstractFacade<Notificacion> {
         
         int leida = 0;
         
-        q = em.createQuery("select n from Notificacion n where n.usuarioId = :idUser AND n.leida = :leida");
+        q = em.createQuery("select n from Notificacion n where n.usuarioId.id = :idUser AND n.leida = :leida");
         q.setParameter("idUser",  idUser);
         q.setParameter("leida",  leida);
         return q.getResultList();
@@ -110,7 +110,7 @@ public class NotificacionFacadeREST extends AbstractFacade<Notificacion> {
     public List<Notificacion> encontrarTodasLasNotificacionesDeUsuario(@PathParam("idUser") int idUser) {
         Query q; 
         
-        q = em.createQuery("select n from Notificacion n where n.usuarioId = :idUser");
+        q = em.createQuery("select n from Notificacion n where n.usuarioId.id = :idUser");
         q.setParameter("idUser",  idUser);
         return q.getResultList();
     }

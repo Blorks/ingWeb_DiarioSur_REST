@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -86,6 +87,28 @@ public class PuntuacionFacadeREST extends AbstractFacade<Puntuacion> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @GET
+    @Path("puntuacion/{user}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Puntuacion> encontrarPuntuacionDeUsuario(@PathParam("idUser") int idUser) {
+        Query q; 
+        
+        q = em.createQuery("select p from Puntuacion p where p.usuarioId.id = :idUser");
+        q.setParameter("idUser",  idUser);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("puntuacion/{evento}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Puntuacion> encontrarPuntuacionesDeEvento(@PathParam("idEvento") int idEvento) {
+        Query q; 
+        
+        q = em.createQuery("select p from Puntuacion p where p.eventoId.id = :idEvento");
+        q.setParameter("idEvento",  idEvento);
+        return q.getResultList();
     }
     
 }
