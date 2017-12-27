@@ -44,9 +44,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByEstarevisado", query = "SELECT e FROM Evento e WHERE e.estarevisado = :estarevisado")})
 public class Evento implements Serializable {
 
-    @OneToMany(mappedBy = "eventoId")
-    private Collection<Puntuacion> puntuacionCollection;
-
     private static final long serialVersionUID = 1L;
     @Size(max = 4000)
     @Column(name = "TITULO")
@@ -76,6 +73,8 @@ public class Evento implements Serializable {
     private Integer estarevisado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventoId")
     private Collection<Tagevento> tageventoCollection;
+    @OneToMany(mappedBy = "eventoId")
+    private Collection<Puntuacion> puntuacionCollection;
     @JoinColumn(name = "DATEEV_ID", referencedColumnName = "ID")
     @ManyToOne
     private Dateev dateevId;
@@ -171,6 +170,15 @@ public class Evento implements Serializable {
         this.tageventoCollection = tageventoCollection;
     }
 
+    @XmlTransient
+    public Collection<Puntuacion> getPuntuacionCollection() {
+        return puntuacionCollection;
+    }
+
+    public void setPuntuacionCollection(Collection<Puntuacion> puntuacionCollection) {
+        this.puntuacionCollection = puntuacionCollection;
+    }
+
     public Dateev getDateevId() {
         return dateevId;
     }
@@ -210,15 +218,6 @@ public class Evento implements Serializable {
     @Override
     public String toString() {
         return "entity.Evento[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Puntuacion> getPuntuacionCollection() {
-        return puntuacionCollection;
-    }
-
-    public void setPuntuacionCollection(Collection<Puntuacion> puntuacionCollection) {
-        this.puntuacionCollection = puntuacionCollection;
     }
     
 }

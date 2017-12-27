@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,4 +89,25 @@ public class FileevFacadeREST extends AbstractFacade<Fileev> {
         return em;
     }
     
+    @GET
+    @Path("archivoURL/{url}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Fileev> encontrarArchivoPorURL(@PathParam("url") String url) {
+        Query q; 
+        
+        q = em.createQuery("select a from Fileev a where a.url like :url");
+        q.setParameter("url", url);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("archivo/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Fileev> encontrarArchivoPorID(@PathParam("id") int id) {
+        Query q; 
+        
+        q = em.createQuery("select a from Fileev a where a.id = :id");
+        q.setParameter("id", id);
+        return q.getResultList();
+    }
 }

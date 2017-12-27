@@ -6,10 +6,13 @@
 package facade;
 
 import entity.Dateev;
+import entity.Evento;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -87,5 +90,88 @@ public class DateevFacadeREST extends AbstractFacade<Dateev> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    @GET
+    @Path("date/{dia}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorDia(@PathParam("dia") Date dia) {
+        Query q; 
+        
+        q = em.createQuery("select f from Dateev f where f.dia = :dia");
+        q.setParameter("dia", dia);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("date/{inicio}/{fin}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorInicioFin(@PathParam("inicio") Date inicio, @PathParam("fin") Date fin) {
+        Query q; 
+        
+        q = em.createQuery("select f from Dateev f where f.desde = :inicio AND f.hasta = :fin");
+        q.setParameter("inicio", inicio);
+        q.setParameter("fin", fin);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("dateDias/{listaDias}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorListaDias(@PathParam("listaDias") String listaDias) {
+        Query q; 
+        
+        q = em.createQuery("select f from Dateev f where f.listadias like :listaDias");
+        q.setParameter("listaDias", listaDias);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("dateID/{idFecha}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorID(@PathParam("idFecha") int idFecha) {
+        Query q; 
+        
+        q = em.createQuery("select f from Dateev f where f.id = :idFecha");
+        q.setParameter("idFecha", idFecha);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("ultimo")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> ultimoIDInsertado(){
+        Query q;
+        
+        q = em.createQuery("SELECT d FROM Dateev d ORDER BY d.id DESC");
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("unico")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorUnica() {
+        Query q; 
+        
+        int condicion = 1;
+        
+        q = em.createQuery("select f from Dateev f where f.esunico = :condicion");
+        q.setParameter("condicion", condicion);
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("rango")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Dateev> encontrarFechaPorRango() {
+        Query q; 
+        
+        int condicion = 1;
+        
+        q = em.createQuery("select f from Dateev f where f.todoslosdias = :condicion");
+        q.setParameter("condicion", condicion);
+        return q.getResultList();
+    }
+    
+    
     
 }

@@ -41,9 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByRol", query = "SELECT u FROM Usuario u WHERE u.rol = :rol")})
 public class Usuario implements Serializable {
 
-    @OneToMany(mappedBy = "usuarioId")
-    private Collection<Puntuacion> puntuacionCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,6 +67,8 @@ public class Usuario implements Serializable {
     private Collection<Tagusuario> tagusuarioCollection;
     @OneToMany(mappedBy = "usuarioId")
     private Collection<Notificacion> notificacionCollection;
+    @OneToMany(mappedBy = "usuarioId")
+    private Collection<Puntuacion> puntuacionCollection;
     @JoinColumn(name = "FILEEV_ID", referencedColumnName = "ID")
     @ManyToOne
     private Fileev fileevId;
@@ -149,6 +148,15 @@ public class Usuario implements Serializable {
         this.notificacionCollection = notificacionCollection;
     }
 
+    @XmlTransient
+    public Collection<Puntuacion> getPuntuacionCollection() {
+        return puntuacionCollection;
+    }
+
+    public void setPuntuacionCollection(Collection<Puntuacion> puntuacionCollection) {
+        this.puntuacionCollection = puntuacionCollection;
+    }
+
     public Fileev getFileevId() {
         return fileevId;
     }
@@ -189,15 +197,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entity.Usuario[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Puntuacion> getPuntuacionCollection() {
-        return puntuacionCollection;
-    }
-
-    public void setPuntuacionCollection(Collection<Puntuacion> puntuacionCollection) {
-        this.puntuacionCollection = puntuacionCollection;
     }
     
 }

@@ -36,9 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Fileev.findByUsuarioId", query = "SELECT f FROM Fileev f WHERE f.usuarioId = :usuarioId")})
 public class Fileev implements Serializable {
 
-    @OneToMany(mappedBy = "fileevId")
-    private Collection<Usuario> usuarioCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +49,8 @@ public class Fileev implements Serializable {
     @NotNull
     @Column(name = "USUARIO_ID")
     private int usuarioId;
+    @OneToMany(mappedBy = "fileevId")
+    private Collection<Usuario> usuarioCollection;
 
     public Fileev() {
     }
@@ -89,6 +88,15 @@ public class Fileev implements Serializable {
         this.usuarioId = usuarioId;
     }
 
+    @XmlTransient
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
+    }
+
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -112,15 +120,6 @@ public class Fileev implements Serializable {
     @Override
     public String toString() {
         return "entity.Fileev[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
-    }
-
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
     }
     
 }
