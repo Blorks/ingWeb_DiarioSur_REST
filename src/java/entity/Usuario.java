@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -62,11 +64,12 @@ public class Usuario implements Serializable {
     @Column(name = "ROL")
     private String rol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
-    private Collection<Calendario> calendarioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
     private Collection<Tagusuario> tagusuarioCollection;
     @OneToMany(mappedBy = "usuarioId")
     private Collection<Notificacion> notificacionCollection;
+    @JoinColumn(name = "FILEEV_ID", referencedColumnName = "ID")
+    @ManyToOne
+    private Fileev fileevId;
     @OneToMany(mappedBy = "usuarioId")
     private Collection<Evento> eventoCollection;
 
@@ -126,15 +129,6 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Calendario> getCalendarioCollection() {
-        return calendarioCollection;
-    }
-
-    public void setCalendarioCollection(Collection<Calendario> calendarioCollection) {
-        this.calendarioCollection = calendarioCollection;
-    }
-
-    @XmlTransient
     public Collection<Tagusuario> getTagusuarioCollection() {
         return tagusuarioCollection;
     }
@@ -150,6 +144,14 @@ public class Usuario implements Serializable {
 
     public void setNotificacionCollection(Collection<Notificacion> notificacionCollection) {
         this.notificacionCollection = notificacionCollection;
+    }
+
+    public Fileev getFileevId() {
+        return fileevId;
+    }
+
+    public void setFileevId(Fileev fileevId) {
+        this.fileevId = fileevId;
     }
 
     @XmlTransient

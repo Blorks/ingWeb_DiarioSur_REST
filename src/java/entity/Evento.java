@@ -72,11 +72,7 @@ public class Evento implements Serializable {
     @Column(name = "ESTAREVISADO")
     private Integer estarevisado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventoId")
-    private Collection<Calendario> calendarioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventoId")
     private Collection<Tagevento> tageventoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventoId")
-    private Collection<Archivos> archivosCollection;
     @JoinColumn(name = "DATEEV_ID", referencedColumnName = "ID")
     @ManyToOne
     private Dateev dateevId;
@@ -164,30 +160,12 @@ public class Evento implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Calendario> getCalendarioCollection() {
-        return calendarioCollection;
-    }
-
-    public void setCalendarioCollection(Collection<Calendario> calendarioCollection) {
-        this.calendarioCollection = calendarioCollection;
-    }
-
-    @XmlTransient
     public Collection<Tagevento> getTageventoCollection() {
         return tageventoCollection;
     }
 
     public void setTageventoCollection(Collection<Tagevento> tageventoCollection) {
         this.tageventoCollection = tageventoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Archivos> getArchivosCollection() {
-        return archivosCollection;
-    }
-
-    public void setArchivosCollection(Collection<Archivos> archivosCollection) {
-        this.archivosCollection = archivosCollection;
     }
 
     public Dateev getDateevId() {
