@@ -188,6 +188,25 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
         return q.getResultList();
     }
     
+    @GET
+    @Path("ordenAlfabeticoDESC")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ordenarEventosAlfabeticamenteDESC(){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.titulo DESC");
+        return q.getResultList();
+    }
+    
+    @GET
+    @Path("ordenPrecioDESC")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Evento> ordenarEventosPrecioDESC(){
+        Query q;
+        
+        q = em.createQuery("SELECT e FROM Evento e ORDER BY e.precio DESC");
+        return q.getResultList();
+    }
     
     @GET
     @Path("eventoFechaDesde/{idFecha}")
