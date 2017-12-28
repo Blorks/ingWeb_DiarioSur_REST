@@ -6,9 +6,13 @@
 package facade;
 
 import entity.Dateev;
-import entity.Evento;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -91,14 +95,24 @@ public class DateevFacadeREST extends AbstractFacade<Dateev> {
         return em;
     }
     
+    /*
     @GET
     @Path("date/{dia}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Dateev> encontrarFechaPorDia(@PathParam("dia") Date dia) {
-        Query q; 
+    public List<Dateev> encontrarFechaPorDia(@PathParam("dia") String dia) {
+        Query q;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         
+        Date d = new Date();
+        try {
+            d = formato.parse(dia);
+        } catch (ParseException ex) {
+            Logger.getLogger(DateevFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
         q = em.createQuery("select f from Dateev f where f.dia = :dia");
-        q.setParameter("dia", dia);
+        q.setParameter("dia", d);
         return q.getResultList();
     }
     
@@ -124,6 +138,8 @@ public class DateevFacadeREST extends AbstractFacade<Dateev> {
         q.setParameter("listaDias", listaDias);
         return q.getResultList();
     }
+
+*/
     
     @GET
     @Path("dateID/{idFecha}")
