@@ -211,7 +211,7 @@ public class EventoFacadeREST extends AbstractFacade<Evento> {
     @GET
     @Path("eventoFechaDesde/{idFecha}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Evento> encontrarEventosPorFecha(@PathParam("idFecha") int idFecha) { //duda sobre si tratará el date bien o hacerlo con String y en ese caso, lo pilla bien?
+    public List<Evento> encontrarEventosPorFecha(@PathParam("idFecha") int idFecha) {
         Query q; 
         
         q = em.createQuery("select e from Evento e WHERE e.dateevId.id = :idFecha");
