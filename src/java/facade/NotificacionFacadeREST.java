@@ -91,21 +91,20 @@ public class NotificacionFacadeREST extends AbstractFacade<Notificacion> {
     }
     
     @GET
-    @Path("notificacionLeida/{user}")
+    @Path("notificacionUsuario/{idUser}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Notificacion> encontrarNotificacionesDeUsuario(@PathParam("idUser") int idUser) {
-        Query q; 
-        
+    public List<Notificacion> encontrarNotificacionByUsuario(@PathParam("idUser") int idUsuario) {
+        Query q;
         int leida = 0;
         
         q = em.createQuery("select n from Notificacion n where n.usuarioId.id = :idUser AND n.leida = :leida");
-        q.setParameter("idUser",  idUser);
+        q.setParameter("idUser",  idUsuario);
         q.setParameter("leida",  leida);
         return q.getResultList();
     }
     
     @GET
-    @Path("notificacionTodas/{user}")
+    @Path("notificacionTodas/{idUser}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Notificacion> encontrarTodasLasNotificacionesDeUsuario(@PathParam("idUser") int idUser) {
         Query q; 
